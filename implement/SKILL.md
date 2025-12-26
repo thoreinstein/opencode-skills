@@ -59,25 +59,33 @@ Or for simpler decisions:
 
 ### Phase 3: Parallel Implementation
 
-Deploy domain specialists in parallel where independent:
+- Use the roadmap plugin to develop the Implementation plan
+- Deploy domain specialists in parallel where independent:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │  PARALLEL IMPLEMENTATION SWARM                              │
 ├─────────────────────────────────────────────────────────────┤
 │  BACKEND                     │  FRONTEND                    │
-│  ├─ @go (Go APIs/CLIs)       │  ├─ @frontend (UI)           │
-│  ├─ @zig (Zig systems code)  │  └─ (styling, layout)        │
+│  ├─ @go (Go APIs/CLIs)       │  └─ @frontend (UI)           │
 │  ├─ @postgres (schema)       │                              │
+│  ├─ @redis (redis)           │                              │
+│  ├─ @gcp-dev (google apis)   │                              │
 │  └─ @linux (shell scripts)   │                              │
 ├──────────────────────────────┼──────────────────────────────┤
 │  INFRASTRUCTURE              │  QUALITY                     │
 │  ├─ @k8s (manifests)         │  ├─ @testing (test strategy) │
 │  ├─ @terraform (IaC)         │  ├─ @security (security)     │
 │  ├─ @cicd (pipelines)        │  ├─ @perf (performance)      │
-│  └─ @nix (Nix configs)       │  └─ @sre (reliability)       │
+│  ├─ @nix (Nix configs)       │  ├─ @sre (reliability)       │
+│  ├─ @finops (architecture)   │  ├─ @a11y (accessibility)    │
+│  ├─ @gcp-architect (gcp)     │  ├─ @chaos (experiments)     │
+│  └─ @security (entsec)       │  ├─ @o11y (observability)    │
+│                              │  └─ @e2e (end to end tests)  │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+- Use the commit skill to commit changes after each phase
 
 ### Phase 4: Integration
 
