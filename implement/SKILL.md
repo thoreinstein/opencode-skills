@@ -10,11 +10,56 @@ description: Full implementation mode - end-to-end feature implementation with p
 
 Execute a complete feature implementation using coordinated agent swarms.
 
+---
+
+## MANDATORY: Roadmap Plugin Usage (NON-NEGOTIABLE)
+
+You MUST use the roadmap plugin (`createroadmap`, `readroadmap`, `updateroadmap`) to:
+
+1. **Define all phases BEFORE any implementation work begins**
+2. **Track phase status** — mark `in_progress` when starting, `completed` when done
+3. **Gate phase transitions** — do NOT proceed to next phase until current phase is committed
+4. **Archive roadmap** — delete/archive when implementation is complete
+
+---
+
+## Phase Execution Loop (NON-NEGOTIABLE)
+
+Every phase follows this exact sequence:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  PHASE EXECUTION LOOP                                       │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│   1. PLAN     → Define work for this phase                  │
+│                 Call: updateroadmap(status="in_progress")   │
+│                                                             │
+│   2. WORK     → Execute the phase work                      │
+│                 Delegate to appropriate specialists         │
+│                                                             │
+│   3. VERIFY   → Run verification checklist                  │
+│                 Tests pass, lints clean, build succeeds     │
+│                                                             │
+│   4. COMMIT   → Invoke commit skill                         │
+│                 /commit (or load commit skill)              │
+│                 Call: updateroadmap(status="completed")     │
+│                                                             │
+│   5. PROCEED  → Only after commit succeeds                  │
+│                 Move to next phase                          │
+│                                                             │
+│   ⚠️  DO NOT PROCEED TO NEXT PHASE UNTIL COMMIT SUCCEEDS    │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
 ## Implementation Protocol
 
 ### Phase 1: Requirements Analysis
 
-Before coding, understand completely:
+**PLAN:** Gather context and define scope.
 
 1. **Gather Context**
 
@@ -31,16 +76,43 @@ background_task(agent="librarian", prompt="Research best practices for...")
 - What constraints exist?
 - What patterns should be followed?
 
-3. **Create Implementation Plan**
-   Use TODO list to break into atomic steps:
+3. **Create Roadmap (MANDATORY)**
 
-- Each step should be independently verifiable
-- Identify parallelization opportunities
-- Note which steps need which agents
+Use `createroadmap` to define ALL phases with actions:
+
+```
+createroadmap(
+  feature="Feature Name",
+  spec="High-level specification...",
+  features=[
+    { number: "1", title: "Phase 1", description: "...", actions: [...] },
+    { number: "2", title: "Phase 2", description: "...", actions: [...] },
+    ...
+  ]
+)
+```
+
+Each phase MUST include a final action for commit:
+
+```
+{ number: "X.99", description: "Commit phase X changes via commit skill", status: "pending" }
+```
+
+**WORK:** N/A for this phase (planning only).
+
+**VERIFY:** Roadmap created, requirements clear.
+
+**COMMIT:** Use commit skill to commit any planning artifacts.
+
+**PROCEED:** Only after commit succeeds.
+
+---
 
 ### Phase 2: Architecture Decision (If Needed)
 
-For significant features, consult:
+**PLAN:** Mark phase in_progress via `updateroadmap`.
+
+**WORK:** For significant features, consult:
 
 ```
 @architect Design the architecture for:
@@ -57,10 +129,19 @@ Or for simpler decisions:
 - [Alternative considered]
 ```
 
+**VERIFY:** Architecture documented, decisions recorded.
+
+**COMMIT:** Use commit skill to commit architecture docs/decisions.
+
+**PROCEED:** Only after commit succeeds.
+
+---
+
 ### Phase 3: Parallel Implementation
 
-- Use the roadmap plugin to develop the Implementation plan
-- Deploy domain specialists in parallel where independent:
+**PLAN:** Mark phase in_progress. Identify parallel work streams.
+
+**WORK:** Deploy domain specialists in parallel where independent:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -85,37 +166,81 @@ Or for simpler decisions:
 └─────────────────────────────────────────────────────────────┘
 ```
 
-- Use the commit skill to commit changes after each phase
+**VERIFY:** All implementation work complete, tests written.
+
+**COMMIT:** Use commit skill to commit all implementation changes.
+
+**PROCEED:** Only after commit succeeds.
+
+---
 
 ### Phase 4: Integration
 
-After parallel work:
+**PLAN:** Mark phase in_progress.
+
+**WORK:**
 
 1. Integrate components
 2. Resolve any conflicts
-3. Ensure consistency
+3. Ensure consistency across modules
+
+**VERIFY:** Integration tests pass, no conflicts.
+
+**COMMIT:** Use commit skill to commit integration changes.
+
+**PROCEED:** Only after commit succeeds.
+
+---
 
 ### Phase 5: Verification
+
+**PLAN:** Mark phase in_progress.
+
+**WORK:** Run full verification checklist:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │  VERIFICATION CHECKLIST                                     │
 ├─────────────────────────────────────────────────────────────┤
-│  [ ] lsp_diagnostics clean on all changed files            │
-│  [ ] Tests pass (go test / npm test / etc.)                │
-│  [ ] Linter passes (golangci-lint / eslint)                │
-│  [ ] Build succeeds                                        │
-│  [ ] Security review if needed (@security)                 │
+│  [ ] lsp_diagnostics clean on all changed files             │
+│  [ ] Tests pass (go test / npm test / etc.)                 │
+│  [ ] Linter passes (golangci-lint / eslint)                 │
+│  [ ] Build succeeds                                         │
+│  [ ] Security review if needed (@security)                  │
 │  [ ] Performance acceptable                                 │
 └─────────────────────────────────────────────────────────────┘
 ```
 
+**VERIFY:** All checks pass.
+
+**COMMIT:** Use commit skill to commit any verification fixes.
+
+**PROCEED:** Only after commit succeeds.
+
+---
+
 ### Phase 6: Documentation & Cleanup
+
+**PLAN:** Mark phase in_progress.
+
+**WORK:**
 
 - Update relevant documentation
 - Clean up TODO list
 - Cancel all background tasks
 - Summarize what was implemented
+
+**VERIFY:** Documentation complete, no orphaned tasks.
+
+**COMMIT:** Use commit skill to commit documentation.
+
+**CLEANUP (MANDATORY):**
+
+- Archive or delete the roadmap file
+- Mark all roadmap actions as completed via `updateroadmap`
+- Confirm no uncommitted changes remain
+
+---
 
 ## Implementation Output
 
@@ -147,6 +272,11 @@ At completion, provide:
 - [ ] All diagnostics clean
 - [ ] Tests passing
 - [ ] Build succeeds
+
+### Commits Made
+
+- [Commit hash] — [Phase X: description]
+- [Commit hash] — [Phase Y: description]
 
 ### Known Limitations
 
