@@ -151,3 +151,6 @@ Before finalizing the plan:
 Now analyze ticket: **$ARGUMENTS**
 
 Start with Step 1: Fetch the ticket details.
+
+**DO NOT IMPLEMENT ANY CODE**
+**DO NOT CALL submit_plan** — this is analysis only. Save the plan to Obsidian, do not trigger interactive plan review.
