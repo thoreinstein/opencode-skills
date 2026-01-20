@@ -1,9 +1,13 @@
 ---
 name: content-writer
-description: Assists in writing high-quality content by conducting research, adding citations, improving hooks, iterating on outlines, and providing real-time feedback on each section. Transforms your writing process from solo effort to collaborative partnership.
+description: Research-driven content writing with citations, iterative outlines, and real-time feedback. Transforms writing from solo effort to collaborative partnership.
 license: MIT
-compatibility: No external dependencies required. Web search capability recommended for research and citations.
-allowed-tools: Read Glob Grep
+compatibility:
+  - runtime:any
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
 metadata:
   author: thoreinstein
   version: 1.0.0

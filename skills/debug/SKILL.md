@@ -1,9 +1,17 @@
 ---
 name: debug
-description: Guide systematic debugging through hypothesis generation and verification. Uses structured investigation with evidence collection to identify root causes.
+description: Guide systematic debugging through hypothesis generation, evidence collection, and verification. Uses scientific method for root cause analysis.
 license: MIT
-compatibility: Any codebase. No external dependencies required.
-allowed-tools: Read Glob Grep Bash(git:log) Bash(git:diff) Bash(git:blame) Bash(git:show)
+compatibility:
+  - runtime:any
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - Bash(git:log)
+  - Bash(git:diff)
+  - Bash(git:blame)
+  - Bash(git:show)
 metadata:
   author: thoreinstein
   version: 1.0.0

@@ -2,8 +2,18 @@
 name: add-test-coverage
 description: Analyze git HEAD commit changes and implement comprehensive test coverage. Supports unit tests, integration tests, and E2E tests. Automatically detects language and testing frameworks from the repository.
 license: MIT
-compatibility: Requires git. Works with any language/framework that has testable code.
-allowed-tools: Read Glob Grep Bash(git:diff) Bash(git:log) Bash(git:show) Bash(git:status) Bash(git:rev-parse)
+compatibility:
+  - vcs:git
+  - runtime:any
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - Bash(git:diff)
+  - Bash(git:log)
+  - Bash(git:show)
+  - Bash(git:status)
+  - Bash(git:rev-parse)
 metadata:
   author: thoreinstein
   version: 1.0.0

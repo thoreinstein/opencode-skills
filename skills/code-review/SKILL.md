@@ -1,9 +1,17 @@
 ---
 name: code-review
-description: Code review mode - comprehensive review with security, performance, and maintainability focus. Produces structured feedback with APPROVE/NEEDS WORK/BLOCK verdict.
+description: Comprehensive code review with security, performance, and maintainability focus. Produces structured review with APPROVE, NEEDS WORK, or BLOCK verdict.
 license: MIT
-compatibility: Requires git. Works with any language.
-allowed-tools: Read Glob Grep Bash(git:diff) Bash(git:log) Bash(git:show) Bash(git:blame)
+compatibility:
+  - runtime:any
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - Bash(git:diff)
+  - Bash(git:log)
+  - Bash(git:show)
+  - Bash(git:blame)
 metadata:
   author: thoreinstein
   version: 1.0.0

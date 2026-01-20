@@ -1,9 +1,16 @@
 ---
 name: analyze
-description: Deep analysis mode - thorough multi-phase investigation covering architecture, security, performance, and reliability. Produces prioritized findings with actionable recommendations.
+description: Deep analysis mode - thorough multi-phase investigation with expert consultation for complex problems requiring careful examination
 license: MIT
-compatibility: Any codebase. No external dependencies required.
-allowed-tools: Read Glob Grep Bash(git:log) Bash(git:blame) Bash(git:show)
+compatibility:
+  - runtime:any
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - Bash(git:log)
+  - Bash(git:blame)
+  - Bash(git:show)
 metadata:
   author: thoreinstein
   version: 1.0.0

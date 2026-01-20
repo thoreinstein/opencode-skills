@@ -1,9 +1,16 @@
 ---
 name: deploy-checklist
-description: Generate deployment checklists with pre-flight checks, rollout strategy, verification steps, and rollback plan. Produces documentation for safe deployments - does not execute deployments.
+description: Generate deployment checklists with pre-flight checks, rollout strategy, and verification steps. Analysis only - does not execute deployments.
 license: MIT
-compatibility: Any deployable service.
-allowed-tools: Read Glob Grep Bash(git:log) Bash(git:diff) Bash(git:show)
+compatibility:
+  - runtime:any
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - Bash(git:log)
+  - Bash(git:diff)
+  - Bash(git:show)
 metadata:
   author: thoreinstein
   version: 1.0.0

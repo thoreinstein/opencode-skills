@@ -1,9 +1,18 @@
 ---
 name: commit
-description: Analyze unstaged changes and suggest atomic commit groups with messages. Groups related changes, provides conventional commit messages, and notes dependencies between commits. NEVER pushes to remote.
+description: Analyze unstaged and staged changes, suggest atomic commit groups with conventional commit messages. NEVER pushes to remote.
 license: MIT
-compatibility: Requires git.
-allowed-tools: Read Glob Grep Bash(git:status) Bash(git:diff) Bash(git:log) Bash(git:add) Bash(git:commit)
+compatibility:
+  - vcs:git
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - Bash(git:status)
+  - Bash(git:diff)
+  - Bash(git:log)
+  - Bash(git:add)
+  - Bash(git:commit)
 metadata:
   author: thoreinstein
   version: 1.0.0

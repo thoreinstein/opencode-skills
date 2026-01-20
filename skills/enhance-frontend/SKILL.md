@@ -1,9 +1,15 @@
 ---
 name: enhance-frontend
-description: Enhance frontend to pixel-perfect standards with mobile responsiveness and industry-leading design quality. Covers grid systems, typography, color, components, and accessibility.
+description: Enhance frontend to pixel-perfect standards with mobile responsiveness and industry-leading design quality
 license: MIT
-compatibility: Any web frontend (React, Vue, Svelte, vanilla HTML/CSS, etc.).
-allowed-tools: Read Glob Grep Write Edit
+compatibility:
+  - runtime:any
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - Write
+  - Edit
 metadata:
   author: thoreinstein
   version: 1.0.0
