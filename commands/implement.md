@@ -11,7 +11,7 @@ argument-hint: "<ticket-id> - must have a plan from /analyze"
 2. **GUARD: If the ticket has no Acceptance Criteria (AC), STOP immediately.**
    - Inform the user: "This ticket has no acceptance criteria. Run `/story <ticket-id>` or `/epic <ticket-id>` to begin a refinement session before implementing."
    - Do not proceed with implementation.
-3. Load the implementation plan from Obsidian: `plans/$ARGUMENTS-plan.md`
+3. Load the implementation plan from Obsidian: `working/plans/$ARGUMENTS-plan.md`
 
 If no plan exists, run `/analyze $ARGUMENTS` first.
 

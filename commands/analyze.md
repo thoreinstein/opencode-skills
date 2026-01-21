@@ -127,7 +127,7 @@ If implementation analysis reveals missing prerequisites or undefined work:
 
 Save the implementation plan to Obsidian:
 
-- **Path:** `plans/$ARGUMENTS-plan.md`
+- **Path:** `working/plans/$ARGUMENTS-plan.md`
 
 ---
 
