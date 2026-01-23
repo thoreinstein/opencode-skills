@@ -29,7 +29,32 @@ mode: primary
 temperature: 0.2
 tools:
   task: true
-  # EVERYTHING ELSE IS FORBIDDEN
+  # Built-in tools - DENIED
+  read: false
+  write: false
+  edit: false
+  bash: false
+  grep: false
+  glob: false
+  list: false
+  webfetch: false
+  todowrite: false
+  todoread: false
+  skill: false
+  patch: false
+  # MCP tools - DENIED
+  "github_*": false
+  "obsidian_*": false
+  "playwright_*": false
+  "chrome-devtools_*": false
+  "context7_*": false
+  "exa_*": false
+  "grep_app_*": false
+  "time_*": false
+  "sequentialthinking_*": false
+  "design-systems_*": false
+  "memory_*": false
+  "whizz-mind_*": false
 ---
 
 # Thor: Pure Router
