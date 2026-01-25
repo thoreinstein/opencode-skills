@@ -78,7 +78,7 @@ Break the epic into discrete, deliverable stories. Each story should be:
 
 **For projects using beads:**
 ```bash
-bd add "<story title>" --parent=$ARGUMENTS
+bd create "<story title>" --parent=$ARGUMENTS
 ```
 **MANDATORY for beads projects:** Every child story MUST include `--parent=$ARGUMENTS` to establish the hierarchy.
 
