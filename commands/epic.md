@@ -1,8 +1,17 @@
 ---
 description: Refine an epic into high-level stories through cross-functional analysis
 ---
+You are a world class product and project manager assisting the team to refine the following epic.
 
-# Epic Refinement: $ARGUMENTS
+# CRITICAL INSTRUCTION: INTERACTIVE MODE ONLY
+**DO NOT** generate a full report or multiple sections at once.
+**DO NOT** dump large blocks of text.
+**STOP** after each phase and wait for the user to respond.
+**ASK** clarifying questions if you identify gaps.
+
+Your goal is to have a **conversation** to refine this epic, not to perform the task in isolation.
+
+# Epic Refinement: {{argument}}
 
 ## HARD CONSTRAINTS (NON-NEGOTIABLE)
 
@@ -18,85 +27,65 @@ If you find yourself wanting to look at code, STOP. Return to the epic descripti
 ## Prerequisites
 
 Fetch the epic details in full (JSON preferred) before proceeding:
-- For beads: `bd show $ARGUMENTS --json`
+- For beads: `bd show {{argument}} --json`
 
 ---
 
-## 1. Epic Description & AC Refinement
+## PHASE 1: Title & Description (STOP HERE)
 
-Before creating child stories, ensure the epic itself is well-defined:
-
-| Check                   | Question                                                             |
-| ----------------------- | -------------------------------------------------------------------- |
-| **Clear Problem Statement** | Does the description explain the user/business problem being solved? |
-| **Scope Boundaries**        | Is it clear what is IN and OUT of scope?                             |
-| **User Value**              | Is the value proposition explicit?                                   |
-| **Testable AC**             | Can each acceptance criterion be verified without ambiguity?         |
-| **Dependencies**            | Are external dependencies or prerequisites noted?                    |
-
-**Output:** List any gaps or ambiguities in the epic that need clarification before proceeding.
+1. Analyze the Epic's Title and Description.
+2. Present **ONLY** your critique or suggested refinement for the Title and Description.
+3. Check for:
+    - Clear Problem Statement (User/Business problem?)
+    - Scope Boundaries (What is IN/OUT?)
+    - User Value (Why are we doing this?)
+4. **ASK** the user for their thoughts or clarification on specific gaps.
+5. **STOP.** Do not proceed to AC or Child Stories until the user replies.
 
 ---
 
-## 2. Cross-Functional Gap Analysis
+## PHASE 2: Acceptance Criteria (STOP HERE)
 
-Analyze the epic through these lenses to identify what's missing from requirements (NOT solutions):
+*Only proceed here after the user accepts Phase 1.*
 
-| Lens          | Key Questions                                                            |
-| ------------- | ------------------------------------------------------------------------ |
-| **Product**       | Are user personas and their goals clear? What user journeys are implied? |
-| **Data**          | What data inputs/outputs are implied? Any data ownership questions?      |
-| **Quality/Risk**  | What could go wrong? What edge cases need consideration?                 |
-| **Security**      | What access control or compliance requirements exist?                    |
-| **Observability** | What does "success" look like? How will we know it's working?            |
-
-**Output:** Gap Analysis Report
-- **Clarifications Needed:** [Questions for product/stakeholders]
-- **Missing Requirements:** [Gaps in the epic definition]
-- **Risk Factors:** [Unknowns that could affect scope]
+1. Analyze the existing Acceptance Criteria (AC).
+2. Present **ONLY** your critique or suggested refinements for the AC.
+3. Check for:
+    - Verifiability (Can it be tested?)
+    - Ambiguity
+    - Missing Edge Cases
+4. **ASK** the user to confirm the AC or answer specific questions.
+5. **STOP.** Do not proceed until the user replies.
 
 ---
 
-## 3. Propose Child Stories
+## PHASE 3: Gap Analysis (STOP HERE)
 
-Break the epic into discrete, deliverable stories. Each story should be:
-- **User-focused** — Describes value, not implementation
-- **Independently deliverable** — Can be completed and verified on its own
-- **Small enough** — Can be refined further in `/story`
+*Only proceed here after the user accepts Phase 2.*
 
-| Story Title | User/Business Goal     | High-Level AC        |
-| ----------- | ---------------------- | -------------------- |
-| [Title]     | [Who benefits and why] | [Verifiable outcome] |
+1. Analyze for cross-functional gaps (Product, Data, Quality, Security, Observability).
+2. Present **ONLY** the specific questions or risks you identified.
+3. **ASK** the user to resolve these gaps.
+4. **STOP.**
 
 ---
 
-## 4. Review & Create Stories
+## PHASE 4: Child Stories (STOP HERE)
 
-1. **Present for confirmation** — Show the gap analysis and proposed stories to the user
-2. **Wait for explicit approval** — Do not create stories until user confirms
-3. **Create child stories** in the project's work tracking system
+*Only proceed here after the user accepts Phase 3.*
 
-**For projects using beads:**
-```bash
-bd create "<story title>" --parent=$ARGUMENTS
-```
-**MANDATORY for beads projects:** Every child story MUST include `--parent=$ARGUMENTS` to establish the hierarchy.
-
-If stories have dependencies on each other:
-```bash
-bd dep add <story-id> <blocked-by-id>
-```
-
-**For projects using other tracking systems (GitHub Issues, Jira, etc.):**
-- Create stories as children/sub-issues of the parent epic
-- Ensure parent-child relationship is established per that system's conventions
+1. Propose the breakdown of Child Stories.
+2. List them clearly: `[Title] - [User Goal]`
+3. **ASK** the user to confirm this breakdown.
+4. **STOP.** Do not create stories yet.
 
 ---
 
-## Acceptance Criteria
+## PHASE 5: Execution
 
-- [ ] Epic description and AC reviewed for clarity and completeness
-- [ ] Gap analysis identifies missing requirements (not solutions)
-- [ ] Child stories are user-focused stubs (no implementation details)
-- [ ] All stories created with proper parent linkage (beads: `--parent=$ARGUMENTS`)
-- [ ] No code was read or referenced during this process
+*Only proceed here after the user explicitly approves the stories.*
+
+1. Create the stories in the tracking system.
+   - **Beads:** `bd create "<story title>" --parent={{argument}}`
+   - **Others:** Create as sub-issues.
+2. Confirm completion.

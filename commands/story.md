@@ -1,8 +1,17 @@
 ---
 description: Refine a story into technical tasks through requirements analysis
 ---
+You are a world class product and project manager assisting the team to refine the following story.
 
-# Story Refinement: $ARGUMENTS
+# CRITICAL INSTRUCTION: INTERACTIVE MODE ONLY
+**DO NOT** generate a full report or multiple sections at once.
+**DO NOT** dump large blocks of text.
+**STOP** after each phase and wait for the user to respond.
+**ASK** clarifying questions if you identify gaps.
+
+Your goal is to have a **conversation** to refine this story, not to perform the task in isolation.
+
+# Story Refinement: {{argument}}
 
 ## HARD CONSTRAINTS (NON-NEGOTIABLE)
 
@@ -18,85 +27,63 @@ If you find yourself wanting to look at code, STOP. That belongs in the `/analyz
 ## Prerequisites
 
 Fetch the story details in full (JSON preferred) before proceeding:
-- For beads: `bd show $ARGUMENTS --json`
+- For beads: `bd show {{argument}} --json`
 
 ---
 
-## 1. Story Description & AC Refinement
+## PHASE 1: Story Description & AC (STOP HERE)
 
-Before creating child tasks, ensure the story itself is well-defined:
-
-| Check                   | Question                                                              |
-| ----------------------- | --------------------------------------------------------------------- |
-| **Clear User Value**        | Does the description explain who benefits and why?                    |
-| **Scope Boundaries**        | Is it clear what is IN and OUT of scope for this story?               |
-| **Testable AC**             | Can each acceptance criterion be verified without ambiguity?          |
-| **Edge Cases**              | Are error states, empty states, and boundary conditions addressed?    |
-| **Dependencies**            | Are blockers or prerequisites from other stories noted?               |
-
-**Output:** List any gaps or ambiguities in the story that need clarification before proceeding.
+1. Analyze the Story's Description and Acceptance Criteria.
+2. Present **ONLY** your critique or suggested refinement.
+3. Check for:
+    - Clear User Value (Who benefits and why?)
+    - Scope Boundaries (IN/OUT scope?)
+    - Testable AC (Verifiable?)
+    - Dependencies (Blockers?)
+4. **ASK** the user for their thoughts or clarification.
+5. **STOP.** Do not proceed until the user replies.
 
 ---
 
-## 2. Requirements Gap Analysis
+## PHASE 2: Gap Analysis (STOP HERE)
 
-Analyze the story through these lenses to identify what's missing from requirements (NOT solutions):
+*Only proceed here after the user accepts Phase 1.*
 
-| Lens              | Key Questions                                                          |
-| ----------------- | ---------------------------------------------------------------------- |
-| **Completeness**      | Are all user-facing behaviors specified?                               |
-| **Error Handling**    | What should happen when things go wrong? Are error messages defined?   |
-| **Data Requirements** | What inputs are required? What outputs are expected?                   |
-| **Security**          | Are there access control or validation requirements?                   |
-| **Verification**      | How will we know this is done? What does "working" look like?          |
-
-**Output:** Requirements Gap Report
-- **Clarifications Needed:** [Questions for product/stakeholders]
-- **Missing Requirements:** [Gaps in the story definition]
-- **Edge Cases to Address:** [Boundary conditions not yet specified]
+1. Analyze for missing requirements (NOT solutions).
+2. Check for:
+    - Error Handling (What if it fails?)
+    - Data Requirements (Inputs/Outputs?)
+    - Edge Cases (Empty states, boundaries?)
+    - Security (Access control?)
+3. Present **ONLY** the specific gaps or questions.
+4. **ASK** the user to resolve these.
+5. **STOP.**
 
 ---
 
-## 3. Propose Child Tasks
+## PHASE 3: Breakdown Assessment (STOP HERE)
 
-Break the story into discrete, deliverable tasks if needed. Each task should be:
-- **Outcome-focused** — Describes the result, not the implementation
-- **Independently verifiable** — Has clear criteria for "done"
-- **Small enough** — Can be analyzed and implemented in a single `/analyze` + `/implement` cycle
+*Only proceed here after the user accepts Phase 2.*
 
-| Task Title | Goal                    | Verification Criteria      |
-| ---------- | ----------------------- | -------------------------- |
-| [Title]    | [What needs to be done] | [How to verify it's done]  |
-
----
-
-## 4. Review & Create Tasks
-
-1. **Present for confirmation** — Show the gap analysis and proposed tasks to the user
-2. **Wait for explicit approval** — Do not create tasks until user confirms
-3. **Create child tasks** in the project's work tracking system
-
-**For projects using beads:**
-```bash
-bd create "<task title>" --parent=$ARGUMENTS
-```
-**MANDATORY for beads projects:** Every child task MUST include `--parent=$ARGUMENTS` to establish the hierarchy.
-
-If tasks have dependencies on each other:
-```bash
-bd dep add <task-id> <blocked-by-id>
-```
-
-**For projects using other tracking systems (GitHub Issues, Jira, etc.):**
-- Create tasks as children/sub-issues of the parent story
-- Ensure parent-child relationship is established per that system's conventions
+1. **Assess the size** of the story.
+2. Ask yourself: "Is this story small enough to be implemented in a single continuous session (1-2 hours)?"
+    - **IF YES:** Recommend keeping it as a single story.
+    - **IF NO:** Recommend breaking it down into smaller Child Tasks.
+3. **Present your recommendation** (Keep Single vs. Break Down) to the user.
+    - If breaking down, propose the Child Tasks: `[Title] - [Outcome]`
+4. **ASK** the user to confirm the strategy.
+5. **STOP.** Do not create tasks yet.
 
 ---
 
-## Acceptance Criteria
+## PHASE 4: Execution
 
-- [ ] Story description and AC reviewed for clarity and completeness
-- [ ] Gap analysis identifies missing requirements (not solutions)
-- [ ] Child tasks are outcome-focused stubs (no implementation details)
-- [ ] All tasks created with proper parent linkage (beads: `--parent=$ARGUMENTS`)
-- [ ] No code was read or referenced during this process
+*Only proceed here after the user explicitly approves the plan.*
+
+1. **IF Breaking Down:**
+   - Create the child tasks in the tracking system.
+   - **Beads:** `bd create "<task title>" --parent={{argument}}`
+   - **Others:** Create as sub-issues.
+2. **IF Keeping Single:**
+   - Confirm the story is "Ready for Dev".
+3. Confirm completion.
